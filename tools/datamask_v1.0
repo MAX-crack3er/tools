@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone & Email Masking Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+
+        .section h2 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: #667eea;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: #155724;
+            word-break: break-all;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .example {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        .example strong {
+            color: #533f03;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            input[type="text"], .btn {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Masking Tool</h1>
+        
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                Phone Number Masking
+            </h2>
+            <div class="input-group">
+                <label for="phoneInput">Enter Phone Number:</label>
+                <input type="text" id="phoneInput" placeholder=" e.g. +1-555-123-4567, +111 00 000 000">
+                
+            </div>
+            <button class="btn" onclick="maskPhone()">🔒 Mask Phone Number</button>
+            <div id="phoneResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Email Address Masking
+            </h2>
+            <div class="input-group">
+                <label for="emailInput">Enter Email Address:</label>
+                <input type="text" id="emailInput" placeholder="e.g., john.doe@example.com">
+                
+            </div>
+            <button class="btn" onclick="maskEmail()">🔒 Mask Email Address</button>
+            <div id="emailResult" class="result"></div>
+        </div>
+
+        <div class="footer">
+            <p>🛡️ Privacy-focused masking tool • Works offline • No data stored</p>
+        </div>
+    </div>
+
+    <script>
+        function maskPhone() {
+            const input = document.getElementById('phoneInput').value.trim();
+            const result = document.getElementById('phoneResult');
+            
+            if (!input) {
+                showResult(result, 'Please enter a phone number', 'error');
+                return;
+            }
+            
+            // Remove all non-digit characters to get clean number
+            const cleanNumber = input.replace(/\D/g, '');
+            
+            if (cleanNumber.length < 6) {
+                showResult(result, 'Phone number too short (minimum 6 digits)', 'error');
+                return;
+            }
+            
+            // Mask the number: show first 2 and last 3 digits, mask the rest
+            let maskedNumber;
+            if (cleanNumber.length <= 5) {
+                // For very short numbers, just mask middle part
+                maskedNumber = cleanNumber.substring(0, 2) + '*'.repeat(cleanNumber.length - 4) + cleanNumber.substring(cleanNumber.length - 2);
+            } else {
+                // Standard masking: first 2 + stars + last 3
+                const firstTwo = cleanNumber.substring(0, 2);
+                const lastThree = cleanNumber.substring(cleanNumber.length - 3);
+                const middleLength = cleanNumber.length - 5;
+                maskedNumber = firstTwo + '*'.repeat(middleLength) + lastThree;
+            }
+            
+            showResult(result, maskedNumber, 'success');
+        }
+        
+        function maskEmail() {
+            const input = document.getElementById('emailInput').value.trim();
+            const result = document.getElementById('emailResult');
+            
+            if (!input) {
+                showResult(result, 'Please enter an email address', 'error');
+                return;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input)) {
+                showResult(result, 'Please enter a valid email address', 'error');
+                return;
+            }
+            
+            const [localPart, domain] = input.split('@');
+            
+            let maskedLocal;
+            if (localPart.length <= 3) {
+                // For very short local parts, show all characters
+                maskedLocal = localPart;
+            } else {
+                // Show first 3 characters of local part, mask the rest
+                const firstThree = localPart.substring(0, 3);
+                const middleLength = localPart.length - 3;
+                maskedLocal = firstThree + '*'.repeat(middleLength);
+            }
+            
+            // Mask domain: show first 3 characters and everything after the last dot
+            const domainParts = domain.split('.');
+            const tld = domainParts[domainParts.length - 1];
+            const domainWithoutTld = domainParts.slice(0, -1).join('.');
+            
+            let maskedDomain;
+            if (domainWithoutTld.length <= 3) {
+                // For very short domains, show all characters
+                maskedDomain = domainWithoutTld + '.' + tld;
+            } else {
+                // Show first 3 characters of domain, mask the rest
+                const firstThree = domainWithoutTld.substring(0, 3);
+                const middleLength = domainWithoutTld.length - 3;
+                maskedDomain = firstThree + '*'.repeat(middleLength) + '.' + tld;
+            }
+            
+            const maskedEmail = maskedLocal + '@' + maskedDomain;
+            showResult(result, maskedEmail, 'success');
+        }
+        
+        function showResult(element, text, type) {
+            element.textContent = text;
+            element.className = 'result';
+            
+            if (type === 'error') {
+                element.style.background = '#f8d7da';
+                element.style.borderColor = '#dc3545';
+                element.style.color = '#721c24';
+            } else {
+                element.style.background = '#e8f5e8';
+                element.style.borderColor = '#28a745';
+                element.style.color = '#155724';
+            }
+            
+            // Trigger animation
+            setTimeout(() => {
+                element.classList.add('show');
+            }, 10);
+        }
+        
+        // Add Enter key support
+        document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                maskPhone();
+            }
+        });
+        
+        document.getElementById('emailInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                maskEmail();
+            }
+        });
+        
+        // Clear results when input changes
+        document.getElementById('phoneInput').addEventListener('input', function() {
+            const result = document.getElementById('phoneResult');
+            result.classList.remove('show');
+        });
+        
+        document.getElementById('emailInput').addEventListener('input', function() {
+            const result = document.getElementById('emailResult');
+            result.classList.remove('show');
+        });
+    </script>
+</body>
+</html>
+
